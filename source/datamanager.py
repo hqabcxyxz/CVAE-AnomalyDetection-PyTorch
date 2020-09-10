@@ -1,8 +1,10 @@
 import torch
 import numpy as np
-import tensorflow as tf
+from torchvision.datasets import MNIST
 
 from sklearn.utils import shuffle
+
+MNIST_PATH='/home/chiebotgpuhq/MyCode/python/pytorch/GAN/ganomaly/data'
 
 class Dataset(object):
 
@@ -12,7 +14,14 @@ class Dataset(object):
 
         self.normalize = normalize
 
-        (x_tr, y_tr), (x_te, y_te) = tf.keras.datasets.mnist.load_data()
+        data_tr=MNIST(root=MNIST_PATH,train=True)
+        x_tr=data_tr.data.numpy()
+        y_tr=data_tr.targets.numpy()
+
+        data_te=MNIST(root=MNIST_PATH,train=False)
+        x_te=data_te.data.numpy()
+        y_te=data_te.targets.numpy()
+        
         self.x_tr, self.y_tr = x_tr, y_tr
         self.x_te, self.y_te = x_te, y_te
 
